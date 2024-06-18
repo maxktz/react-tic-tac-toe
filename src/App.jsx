@@ -23,6 +23,11 @@ function App() {
   const [table, setTable] = useState(emptyTable);
   const [player, setPlayer] = useState("X");
 
+  const resetGame = () => {
+    setTable(emptyTable);
+    setPlayer("X");
+  };
+
   const checkWinner = () => {
     const combinations = [
       // Rows
@@ -48,6 +53,9 @@ function App() {
   };
 
   const handleClick = (i, j) => {
+    if (table[i][j] !== "") {
+      return;
+    }
     const newTable = [...table];
     newTable[i][j] = player;
     setTable(newTable);
@@ -55,7 +63,7 @@ function App() {
     const winner = checkWinner();
     if (winner) {
       alert(`Player ${winner} wins!`);
-      setTable(emptyTable);
+      resetGame();
     }
   };
 
@@ -76,7 +84,10 @@ function App() {
         ))}
       </div>
       <div>
-        <button onClick={() => setTable(emptyTable)}>Reset</button>
+        <p>{player} plays!</p>
+      </div>
+      <div>
+        <button onClick={resetGame}>Reset</button>
       </div>
     </div>
   );
