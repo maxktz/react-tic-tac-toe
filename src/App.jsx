@@ -38,11 +38,10 @@ function App() {
       [table[0][2], table[1][1], table[2][0]],
     ];
     for (const combination of combinations) {
-      if (combination.every((val) => val === "X")) {
-        return "X";
-      }
-      if (combination.every((val) => val === "O")) {
-        return "O";
+      for (const player of ["X", "O"]) {
+        if (combination.every((val) => val === player)) {
+          return player;
+        }
       }
     }
     return null;
@@ -62,18 +61,23 @@ function App() {
 
   return (
     <div>
-      {table.map((row, i) => (
-        <div key={i}>
-          {row.map((val, j) => (
-            <Square
-              key={j}
-              value={val}
-              onClick={() => handleClick(i, j)}
-              style={{ margin: "3px" }}
-            />
-          ))}
-        </div>
-      ))}
+      <div>
+        {table.map((row, i) => (
+          <div key={i}>
+            {row.map((val, j) => (
+              <Square
+                key={j}
+                value={val}
+                onClick={() => handleClick(i, j)}
+                style={{ margin: "3px" }}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+      <div>
+        <button onClick={() => setTable(emptyTable)}>Reset</button>
+      </div>
     </div>
   );
 }
